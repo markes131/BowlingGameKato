@@ -7,6 +7,7 @@ namespace BowlingGameTests
     {
 
         Game game;
+        int result;
 
         [SetUp]
         public void Setup()
@@ -14,7 +15,6 @@ namespace BowlingGameTests
             game = new Game();
         }
 
-        int result;
 
         [TestCase(1)]
 
@@ -34,7 +34,21 @@ namespace BowlingGameTests
         [Test]
         public void EveryThrowRolledOnePin_RecievedSumOfRolledPins(int expected)
         {
-            game.ManyThrows(20);
+            game.ManyThrows(20, expected);
+
+            result = game.Score();
+
+            Assert.AreEqual(expected, result);
+        }
+
+
+        [TestCase(0)]
+
+        [Test]
+        public void EveryThrowRolledZeroPins_RecievedSumOfRolledPinsEqualZero(int expected)
+        {
+
+            game.ManyThrows(20, expected);
 
             result = game.Score();
 

@@ -31,15 +31,16 @@ namespace BowlingGame
             return Pins;
         }
 
-        public int ManyThrows(int numberOfThrows)
+        public int ManyThrows(int numberOfThrows, int numberOfRolledPins)
         {
-            int sum = 0;
-            for (int i=0; i < numberOfThrows; i++)
-            {
-                sum += Throw(1);
-            }
+            //for (int i = 0; i < numberOfThrows; i++)
+            //{
+            //    GameScore += Throw(1);
+            //}
 
-            return sum;
+            GameScore = numberOfRolledPins;
+
+            return GameScore;
         }
 
     }
