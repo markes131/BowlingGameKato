@@ -71,23 +71,15 @@ namespace BowlingGameTests
             Assert.AreEqual(expected, result);
         }
 
-        [TestCase(3, 5, 20)]
 
-        [Test]
-        public void RolledTenPinsInTwoThrows_RecieveTenRolledPinsAndSpareBonusInNextThrow(int throws, int rolledPinsPerThrow, int expected)
-        {
-            game.ManyThrows(throws, rolledPinsPerThrow);
-            
-            result = game.Score();
-
-            Assert.AreEqual(expected, result);
-        }
-
-        
         [TestCase(new int[] { 10, 1, 1 }, 14)]
         [TestCase(new int[] { 10, 2, 4 }, 22)]
         [TestCase(new int[] { 5, 5, 4 }, 18)]
         [TestCase(new int[] { 5, 5, 4, 3 }, 21)]
+        [TestCase(new int[] { 5, 5, 5 }, 20)]
+        [TestCase(new int[] { 1, 1, 1 }, 3)]
+        [TestCase(new int[] { 1, 1, 1 }, 3)]
+        //[TestCase(new int[] { 10, 10, 10, 10, 10, 10, 10, 10, 10, 10}, 300)]
 
         [Test]
         public void RolledTenPinsInFirstThrow_RecieveTenRolledPinsAndStrikeBonusForNextTwoThrows(int[] listOfRolledPinsInEveryThrow, int expected)

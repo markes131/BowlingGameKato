@@ -44,8 +44,6 @@ namespace BowlingGame
                 
                 RolledPinsInEveryThrow[i] = rolledPins;
 
-                //GameScore += rolledPins;
-
                 if (i > 1 && (RolledPinsInEveryThrow[i - 2] + RolledPinsInEveryThrow[i - 1]) == 10)
                 {
                     GameScore += rolledPins;
@@ -65,8 +63,6 @@ namespace BowlingGame
                 rolledPins = Throw(listOfRolledPinsInEveryThrow[i]);
 
                 RolledPinsInEveryThrow[i] = rolledPins;
-
-                //GameScore += rolledPins;
 
                 if (i > 1 && (RolledPinsInEveryThrow[i - 2] + RolledPinsInEveryThrow[i - 1]) == 10)
                 {
