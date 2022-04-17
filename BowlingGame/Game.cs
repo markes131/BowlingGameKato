@@ -55,6 +55,32 @@ namespace BowlingGame
             return GameScore;
         }
 
+        public int ManyThrows(int numberOfThrows, int[] listOfRolledPinsInEveryThrow)
+        {
+            RolledPinsInEveryThrow = new int[numberOfThrows];
+            int rolledPins = 0;
+
+            for (int i = 0; i < numberOfThrows; i++)
+            {
+                rolledPins = Throw(listOfRolledPinsInEveryThrow[i]);
+
+                RolledPinsInEveryThrow[i] = rolledPins;
+
+                //GameScore += rolledPins;
+
+                if (i > 1 && (RolledPinsInEveryThrow[i - 2] + RolledPinsInEveryThrow[i - 1]) == 10)
+                {
+                    GameScore += rolledPins;
+                }
+                else if (i > 1 && RolledPinsInEveryThrow[i-2] == 10)
+                {
+                    GameScore += (listOfRolledPinsInEveryThrow[i-1] + listOfRolledPinsInEveryThrow[i]);
+                }
+            }
+
+            return GameScore;
+        }
+
     }
 
 }
