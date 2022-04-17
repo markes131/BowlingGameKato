@@ -21,6 +21,9 @@ namespace BowlingGameTests
         [Test]
         public void OneThrow_RecieveRolledOnePin(int expected)
         {
+
+            game = new Game();
+
             game.Throw(1);
 
             result = game.Score();
@@ -29,12 +32,14 @@ namespace BowlingGameTests
         }
 
 
-        [TestCase(20)]
+        [TestCase(20, 0)]
 
         [Test]
-        public void EveryThrowRolledOnePin_RecievedSumOfRolledPins(int expected)
+        public void EveryThrowRolledOnePin_RecieveSumOfRolledPins(int throws, int expected)
         {
-            game.ManyThrows(20, expected);
+            game = new Game();
+
+            game.ManyThrows(throws, expected);
 
             result = game.Score();
 
@@ -45,8 +50,9 @@ namespace BowlingGameTests
         [TestCase(0)]
 
         [Test]
-        public void EveryThrowRolledZeroPins_RecievedSumOfRolledPinsEqualZero(int expected)
+        public void EveryThrowRolledZeroPins_RecieveSumOfRolledPinsEqualZero(int expected)
         {
+            game = new Game();
 
             game.ManyThrows(20, expected);
 
@@ -54,5 +60,28 @@ namespace BowlingGameTests
 
             Assert.AreEqual(expected, result);
         }
+
+        [TestCase(2, 5, 10)]
+
+        [Test]
+        public void RolledTenPinsInTwoThrows_RecieveTenRolledPins(int throws, int rolledPinsPerThrow, int expected)
+        {
+            game.ManyThrows(throws, rolledPinsPerThrow);
+            result = game.Score();
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestCase(3, 5, 20)]
+
+        [Test]
+        public void RolledTenPinsInTwoThrows_RecieveTenRolledPinsAndSpareBonusInNextThrow(int throws, int rolledPinsPerThrow, int expected)
+        {
+            game.ManyThrows(throws, rolledPinsPerThrow);
+            
+            result = game.Score();
+
+            Assert.AreEqual(expected, result);
+        }
+
     }
 }
