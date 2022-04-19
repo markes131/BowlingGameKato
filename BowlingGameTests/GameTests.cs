@@ -74,17 +74,20 @@ namespace BowlingGameTests
 
         [TestCase(new int[] { 10, 1, 1 }, 14)]
         [TestCase(new int[] { 10, 2, 4 }, 22)]
-        [TestCase(new int[] { 5, 5, 4 }, 18)]
+        [TestCase(new int[] { 5, 5, 4 }, 14)]
         [TestCase(new int[] { 5, 5, 4, 3 }, 21)]
-        [TestCase(new int[] { 5, 5, 5 }, 20)]
+        [TestCase(new int[] { 5, 5, 5 }, 15)]
+        [TestCase(new int[] { 5, 5, 5, 5, 5 }, 30)]
         [TestCase(new int[] { 1, 1, 1 }, 3)]
         [TestCase(new int[] { 1, 1, 1 }, 3)]
-        //[TestCase(new int[] { 10, 10, 10, 10, 10, 10, 10, 10, 10, 10}, 300)]
+        [TestCase(new int[] { 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 }, 150)]
+        [TestCase(new int[] { 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 }, 145)]
+        [TestCase(new int[] { 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 }, 300)]
 
         [Test]
         public void RolledTenPinsInFirstThrow_RecieveTenRolledPinsAndStrikeBonusForNextTwoThrows(int[] listOfRolledPinsInEveryThrow, int expected)
         {
-            game.ManyThrows(listOfRolledPinsInEveryThrow.Length, listOfRolledPinsInEveryThrow);
+            game.ManyThrowsSecond(listOfRolledPinsInEveryThrow.Length, listOfRolledPinsInEveryThrow);
 
             result = game.Score();
 

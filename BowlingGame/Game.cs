@@ -31,20 +31,20 @@ namespace BowlingGame
             return Pins;
         }
 
-        int[] RolledPinsInEveryThrow;
-
+        int[] ListWithNumberOfRolledPinsInThrowWithIndex;
+        
         public int ManyThrows(int numberOfThrows, int numberOfRolledPinsPerThrow)
         {
-            RolledPinsInEveryThrow = new int[numberOfThrows];
+            ListWithNumberOfRolledPinsInThrowWithIndex = new int[numberOfThrows];
             int rolledPins = 0;
 
             for (int i = 0; i < numberOfThrows; i++)
             {
                 rolledPins = Throw(numberOfRolledPinsPerThrow);
                 
-                RolledPinsInEveryThrow[i] = rolledPins;
+                ListWithNumberOfRolledPinsInThrowWithIndex[i] = rolledPins;
 
-                if (i > 1 && (RolledPinsInEveryThrow[i - 2] + RolledPinsInEveryThrow[i - 1]) == 10)
+                if (i > 1 && (ListWithNumberOfRolledPinsInThrowWithIndex[i - 2] + ListWithNumberOfRolledPinsInThrowWithIndex[i - 1]) == 10)
                 {
                     GameScore += rolledPins;
                 }
@@ -53,28 +53,141 @@ namespace BowlingGame
             return GameScore;
         }
 
+
+        int[] ListOfThrowsWithPunctation;
+
         public int ManyThrows(int numberOfThrows, int[] listOfRolledPinsInEveryThrow)
         {
-            RolledPinsInEveryThrow = new int[numberOfThrows];
+            ListWithNumberOfRolledPinsInThrowWithIndex = new int[numberOfThrows];
+            ListOfThrowsWithPunctation = new int[numberOfThrows];
+
             int rolledPins = 0;
+            //Boolean didLastThrowGiveStrike = false;
+            //Boolean thisThrowGiveStrike = false;
+            //Boolean nextThrowIsInNewFrame = false;
+            int frameThrowsCounter = 1;
 
             for (int i = 0; i < numberOfThrows; i++)
             {
                 rolledPins = Throw(listOfRolledPinsInEveryThrow[i]);
 
-                RolledPinsInEveryThrow[i] = rolledPins;
+                ListWithNumberOfRolledPinsInThrowWithIndex[i] = rolledPins;
 
-                if (i > 1 && (RolledPinsInEveryThrow[i - 2] + RolledPinsInEveryThrow[i - 1]) == 10)
+/*                if (lastThrowGaveStrike == true)
+                {
+                    nextThrowIsInNewFrame = true;
+                }*/
+
+                // SPARE
+                //if (i > 1 && ((ListOfThrowsWithRolledPins[i - 2] + ListOfThrowsWithRolledPins[i - 1]) == 10) && nextThrowIsInNewFrame)
+                //if (frameThrowsCounter == 2 && nextThrowIsInNewFrame == true && ((ListOfThrowsWithRolledPins[i - 2] + ListOfThrowsWithRolledPins[i - 1]) == 10))
+                if (frameThrowsCounter == 1 && i > 0 && ((ListWithNumberOfRolledPinsInThrowWithIndex[i - 1] + ListWithNumberOfRolledPinsInThrowWithIndex[i]) == 10))
                 {
                     GameScore += rolledPins;
                 }
-                else if (i > 1 && RolledPinsInEveryThrow[i-2] == 10)
+
+                // STRIKE
+                //if (i > 1 && RolledPinsInEveryThrow[i-2] == 10)
+                if (frameThrowsCounter == 1 && ListWithNumberOfRolledPinsInThrowWithIndex[i] == 10)
                 {
+                    //thisThrowGiveStrike = true;
+                    //didLastThrowGiveStrike = true;
+                    //nextThrowIsInNewFrame = true;
                     GameScore += (listOfRolledPinsInEveryThrow[i-1] + listOfRolledPinsInEveryThrow[i]);
+                    frameThrowsCounter = 2;
+                }
+
+                ListOfThrowsWithPunctation[i] = GameScore;
+                //nextThrowIsInNewFrame = false;
+
+                if (frameThrowsCounter == 2)
+                {
+                    frameThrowsCounter = 1;
+                }
+                else
+                {
+                    frameThrowsCounter++;
                 }
             }
 
             return GameScore;
+        }
+
+
+        public int ManyThrowsSecond(int numberOfThrows, int[] listOfRolledPinsInEveryThrow)
+        {
+
+            ListWithNumberOfRolledPinsInThrowWithIndex = new int[numberOfThrows];
+            int rolledPins = 0;
+            int frameThrowsCounter = 1;
+            Boolean lastFrameUnlockedSpare = false;
+            Boolean lastFrameUnlockedStrike = false;
+            int usedStrikeBonuseCounter = 0;
+
+            for (int i = 0; i < numberOfThrows; i++)
+            {
+                if (frameThrowsCounter > 2)
+                {
+                    frameThrowsCounter = 1;
+                }
+
+                rolledPins = Throw(listOfRolledPinsInEveryThrow[i]);
+
+                ListWithNumberOfRolledPinsInThrowWithIndex[i] = rolledPins;
+
+                // SPARE sprawdzamy czy ostatnia ramka dała nam bonus 
+                //if (lastFrameUnlockedSpare == true)
+                //if (lastFrameUnlockedSpare == true && frameThrowsCounter == 1)
+                //if (lastFrameUnlockedSpare == true && (i <= numberOfThrows - 1) && frameThrowsCounter == 1)
+                //if (lastFrameUnlockedSpare == true && ((i + 1) <= numberOfThrows))
+                if (i == numberOfThrows - 1)
+                {
+                    lastFrameUnlockedSpare = false;
+                }
+                if (lastFrameUnlockedSpare == true)
+                {
+                    GameScore += rolledPins;
+                    lastFrameUnlockedSpare = false;
+                } 
+
+                // SPARE sprawdzamy czy po drugim rzucie odblokowujemy bonus
+                if (frameThrowsCounter == 2 && i > 0 && ((ListWithNumberOfRolledPinsInThrowWithIndex[i - 1] + ListWithNumberOfRolledPinsInThrowWithIndex[i]) == 10))
+                {
+                        lastFrameUnlockedSpare = true;
+                }
+
+                // STRIKE sprawdzamy czy ostatnia ramka dała nam bonus 
+                if (lastFrameUnlockedStrike == true && usedStrikeBonuseCounter <= 2)
+                {
+                    //GameScore += (listOfRolledPinsInEveryThrow[i - 1] + listOfRolledPinsInEveryThrow[i]);
+                    GameScore += listOfRolledPinsInEveryThrow[i];
+                    usedStrikeBonuseCounter++;
+                }
+                else
+                {
+                    usedStrikeBonuseCounter = 0;
+                }
+                // STRIKE sprawdzamy czy aktualny rzut dał nam bonus
+                if (frameThrowsCounter == 1 && rolledPins == 10)
+                {
+                    lastFrameUnlockedStrike = true;
+                    frameThrowsCounter = 3;
+                }
+                else
+                {
+                    frameThrowsCounter++;
+                }
+                //if (frameThrowsCounter == 2)
+                //{
+                //    frameThrowsCounter = 1;
+                //}
+                //else
+                //{
+                //    frameThrowsCounter++;
+                //}
+            }
+
+                return GameScore;
         }
 
     }
