@@ -32,14 +32,14 @@ namespace BowlingGameTests
         }
 
 
-        [TestCase(20, 0)]
+        [TestCase(20, 1, 20)]
 
         [Test]
-        public void EveryThrowRolledOnePin_RecieveSumOfRolledPins(int throws, int expected)
+        public void EveryThrowRolledOnePin_RecieveSumOfRolledPins(int throws, int numberOfRolledPinsPerThrow, int expected)
         {
             game = new Game();
 
-            game.ManyThrows(throws, expected);
+            game.ManyThrows(throws, numberOfRolledPinsPerThrow);
 
             result = game.Score();
 
