@@ -119,9 +119,13 @@ namespace BowlingGame
 
             ListWithNumberOfRolledPinsInThrowWithIndex = new int[numberOfThrows];
             int rolledPins = 0;
+            // iteration variable for countering throws in current frame
             int frameThrowsCounter = 1;
+            // pointing the index of frame
+            int frameCounter = 0;
             Boolean lastFrameUnlockedSpare = false;
             Boolean lastFrameUnlockedStrike = false;
+            // iteration variable for countering of usage of Strike bonuses
             int usedStrikeBonuseCounter = 0;
 
             for (int i = 0; i < numberOfThrows; i++)
@@ -156,7 +160,7 @@ namespace BowlingGame
                         lastFrameUnlockedSpare = true;
                 }
 
-                // STRIKE sprawdzamy czy ostatnia ramka dała nam bonus 
+                // STRIKE sprawdzamy czy ostatnia ramka dała nam bonus jeśli tak to go liczymy
                 if (lastFrameUnlockedStrike == true && usedStrikeBonuseCounter <= 2)
                 {
                     //GameScore += (listOfRolledPinsInEveryThrow[i - 1] + listOfRolledPinsInEveryThrow[i]);
@@ -167,15 +171,22 @@ namespace BowlingGame
                 {
                     usedStrikeBonuseCounter = 0;
                 }
+
                 // STRIKE sprawdzamy czy aktualny rzut dał nam bonus
                 if (frameThrowsCounter == 1 && rolledPins == 10)
                 {
                     lastFrameUnlockedStrike = true;
                     frameThrowsCounter = 3;
+                    usedStrikeBonuseCounter = 0;
                 }
                 else
                 {
                     frameThrowsCounter++;
+                }
+
+                if (frameThrowsCounter >= 3)
+                {
+                    frameCounter++;
                 }
                 //if (frameThrowsCounter == 2)
                 //{
