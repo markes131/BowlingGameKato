@@ -140,6 +140,8 @@ namespace BowlingGame
 
                 ListWithNumberOfRolledPinsInThrowWithIndex[i] = rolledPins;
 
+                Console.WriteLine($"#{i+1} #{listOfRolledPinsInEveryThrow[i]}");
+
                 // SPARE sprawdzamy czy aktualny rzut jest ostatnim rzutem, jeśli tak to porzucamy multiplaying strąconych pinów w tym rzucie
                 if (i == numberOfThrows - 1)
                 {
@@ -164,13 +166,18 @@ namespace BowlingGame
 
 
                 //STRIKE sprawdzamy czy aktualny rzut jest jednym z dwóch ostatnich, jeśli tak to porzucamy multiplaying strąconych pinów w tych rzutach
-                if (frameCounter >= 10 && (i == numberOfThrows - 2 || i == numberOfThrows - 1))
+                //if (frameCounter >= 10 && (i == numberOfThrows - 2 || i == numberOfThrows - 1))
+
+                //STRIKE sprawdzamy czy aktualny rzut jest ostatnim, jeśli tak to porzucamy multiplaying strąconych pinów dla tego rzutu
+                if (frameCounter >= 10 && (i == numberOfThrows - 1))
                 {
                     lastFrameUnlockedStrike = false;
                 }
                 // STRIKE sprawdzamy czy ostatnia ramka dała nam bonus jeśli tak to go liczymy
-                if (lastFrameUnlockedStrike == true && usedStrikeBonusCounter <= 2)
+                if (lastFrameUnlockedStrike == true && usedStrikeBonusCounter <= 2 && frameCounter < 10)
                 {
+                    Console.WriteLine($"BONUS +{listOfRolledPinsInEveryThrow[i]} #{i}");
+
                     //GameScore += (listOfRolledPinsInEveryThrow[i - 1] + listOfRolledPinsInEveryThrow[i]);
                     GameScore += listOfRolledPinsInEveryThrow[i];
                     usedStrikeBonusCounter++;
@@ -180,9 +187,21 @@ namespace BowlingGame
                     usedStrikeBonusCounter = 0;
                 }
 
+                // sprawdzamy czy przed wcześniejszą ramką (ramka przed wcześniejszą ramką -> wcześniejsza ramka -> obecna ramka) też mieliśmy strike'a,
+                // jeśli tak to robimy drugie multiplaying
+                if (frameCounter >= 2 && (listOfRolledPinsInEveryThrow[i - 2] == 10))
+                {
+                    if ((i != numberOfThrows - 1))
+                    {
+                        GameScore += listOfRolledPinsInEveryThrow[i];
+                        Console.WriteLine($"BONUS +{listOfRolledPinsInEveryThrow[i]} #{(i - 1)}");
+                    }
+                }
+
                 // STRIKE sprawdzamy czy aktualny rzut dał nam bonus
                 if (frameThrowsCounter == 1 && rolledPins == 10 && frameCounter < 10)
                 {
+                    Console.WriteLine("STRIKE");
                     lastFrameUnlockedStrike = true;
                     frameThrowsCounter = 3;
                     usedStrikeBonusCounter = 0;
@@ -204,9 +223,12 @@ namespace BowlingGame
                 //{
                 //    frameThrowsCounter++;
                 //}
+                Console.WriteLine($"Score = {GameScore}");
+                Console.WriteLine();
             }
 
             FrameCounter = frameCounter;
+            Console.WriteLine($"Score = {GameScore}");
 
             return GameScore;
         }

@@ -82,6 +82,7 @@ namespace BowlingGameTests
         [TestCase(new int[] { 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 }, 150, 10)]
         [TestCase(new int[] { 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 }, 145, 10)]
         [TestCase(new int[] { 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 }, 300, 10)]
+        [TestCase(new int[] { 9, 0, 9, 0, 9, 0, 9, 0, 9, 0, 9, 0, 9, 0, 9, 0, 9, 0, 9, 0}, 90, 10)]
 
         [Test]
         public void RolledTenPinsInFirstThrow_RecieveTenRolledPinsAndStrikeBonusForNextTwoThrows(int[] listOfRolledPinsInEveryThrow, int expectedScore, int expectedNumberOfFrames)
