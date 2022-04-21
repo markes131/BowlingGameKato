@@ -127,7 +127,7 @@ namespace BowlingGame
             Boolean lastFrameUnlockedSpare = false;
             Boolean lastFrameUnlockedStrike = false;
             // iteration variable for countering of usage of Strike bonuses
-            int usedStrikeBonuseCounter = 0;
+            int usedStrikeBonusCounter = 0;
 
             for (int i = 0; i < numberOfThrows; i++)
             {
@@ -140,15 +140,16 @@ namespace BowlingGame
 
                 ListWithNumberOfRolledPinsInThrowWithIndex[i] = rolledPins;
 
+                // SPARE sprawdzamy czy aktualny rzut jest ostatnim rzutem, jeśli tak to porzucamy multiplaying strąconych pinów w tym rzucie
+                if (i == numberOfThrows - 1)
+                {
+                    lastFrameUnlockedSpare = false;
+                }
                 // SPARE sprawdzamy czy ostatnia ramka dała nam bonus 
                 //if (lastFrameUnlockedSpare == true)
                 //if (lastFrameUnlockedSpare == true && frameThrowsCounter == 1)
                 //if (lastFrameUnlockedSpare == true && (i <= numberOfThrows - 1) && frameThrowsCounter == 1)
                 //if (lastFrameUnlockedSpare == true && ((i + 1) <= numberOfThrows))
-                if (i == numberOfThrows - 1)
-                {
-                    lastFrameUnlockedSpare = false;
-                }
                 if (lastFrameUnlockedSpare == true)
                 {
                     GameScore += rolledPins;
@@ -161,31 +162,37 @@ namespace BowlingGame
                         lastFrameUnlockedSpare = true;
                 }
 
+
+                //STRIKE sprawdzamy czy aktualny rzut jest jednym z dwóch ostatnich, jeśli tak to porzucamy multiplaying strąconych pinów w tych rzutach
+                if (frameCounter >= 10 && (i == numberOfThrows - 2 || i == numberOfThrows - 1))
+                {
+                    lastFrameUnlockedStrike = false;
+                }
                 // STRIKE sprawdzamy czy ostatnia ramka dała nam bonus jeśli tak to go liczymy
-                if (lastFrameUnlockedStrike == true && usedStrikeBonuseCounter <= 2)
+                if (lastFrameUnlockedStrike == true && usedStrikeBonusCounter <= 2)
                 {
                     //GameScore += (listOfRolledPinsInEveryThrow[i - 1] + listOfRolledPinsInEveryThrow[i]);
                     GameScore += listOfRolledPinsInEveryThrow[i];
-                    usedStrikeBonuseCounter++;
+                    usedStrikeBonusCounter++;
                 }
                 else
                 {
-                    usedStrikeBonuseCounter = 0;
+                    usedStrikeBonusCounter = 0;
                 }
 
                 // STRIKE sprawdzamy czy aktualny rzut dał nam bonus
-                if (frameThrowsCounter == 1 && rolledPins == 10)
+                if (frameThrowsCounter == 1 && rolledPins == 10 && frameCounter < 10)
                 {
                     lastFrameUnlockedStrike = true;
                     frameThrowsCounter = 3;
-                    usedStrikeBonuseCounter = 0;
+                    usedStrikeBonusCounter = 0;
                 }
                 else
                 {
                     frameThrowsCounter++;
                 }
 
-                if (frameThrowsCounter >= 3)
+                if (frameThrowsCounter >= 3 && frameCounter < 10)
                 {
                     frameCounter++;
                 }
