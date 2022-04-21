@@ -17,7 +17,7 @@ namespace BowlingGame
         {
             GameScore = 0;
         }
-        
+
         public int Score()
         {
             return GameScore;
@@ -32,7 +32,7 @@ namespace BowlingGame
         }
 
         int[] ListWithNumberOfRolledPinsInThrowWithIndex;
-        
+
         public int ManyThrows(int numberOfThrows, int numberOfRolledPinsPerThrow)
         {
             ListWithNumberOfRolledPinsInThrowWithIndex = new int[numberOfThrows];
@@ -41,7 +41,7 @@ namespace BowlingGame
             for (int i = 0; i < numberOfThrows; i++)
             {
                 rolledPins = Throw(numberOfRolledPinsPerThrow);
-                
+
                 ListWithNumberOfRolledPinsInThrowWithIndex[i] = rolledPins;
 
                 if (i > 1 && (ListWithNumberOfRolledPinsInThrowWithIndex[i - 2] + ListWithNumberOfRolledPinsInThrowWithIndex[i - 1]) == 10)
@@ -73,10 +73,10 @@ namespace BowlingGame
 
                 ListWithNumberOfRolledPinsInThrowWithIndex[i] = rolledPins;
 
-/*                if (lastThrowGaveStrike == true)
-                {
-                    nextThrowIsInNewFrame = true;
-                }*/
+                /*                if (lastThrowGaveStrike == true)
+                                {
+                                    nextThrowIsInNewFrame = true;
+                                }*/
 
                 // SPARE
                 //if (i > 1 && ((ListOfThrowsWithRolledPins[i - 2] + ListOfThrowsWithRolledPins[i - 1]) == 10) && nextThrowIsInNewFrame)
@@ -93,7 +93,7 @@ namespace BowlingGame
                     //thisThrowGiveStrike = true;
                     //didLastThrowGiveStrike = true;
                     //nextThrowIsInNewFrame = true;
-                    GameScore += (listOfRolledPinsInEveryThrow[i-1] + listOfRolledPinsInEveryThrow[i]);
+                    GameScore += (listOfRolledPinsInEveryThrow[i - 1] + listOfRolledPinsInEveryThrow[i]);
                     frameThrowsCounter = 2;
                 }
 
@@ -113,10 +113,11 @@ namespace BowlingGame
             return GameScore;
         }
 
+        // pointing the index of frame
+        public int FrameCounter {get; set;}
 
         public int ManyThrowsSecond(int numberOfThrows, int[] listOfRolledPinsInEveryThrow)
         {
-
             ListWithNumberOfRolledPinsInThrowWithIndex = new int[numberOfThrows];
             int rolledPins = 0;
             // iteration variable for countering throws in current frame
@@ -198,7 +199,9 @@ namespace BowlingGame
                 //}
             }
 
-                return GameScore;
+            FrameCounter = frameCounter;
+
+            return GameScore;
         }
 
     }

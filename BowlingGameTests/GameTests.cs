@@ -72,26 +72,26 @@ namespace BowlingGameTests
         }
 
 
-        [TestCase(new int[] { 10, 1, 1 }, 14)]
-        [TestCase(new int[] { 10, 2, 4 }, 22)]
-        [TestCase(new int[] { 5, 5, 4 }, 14)]
-        [TestCase(new int[] { 5, 5, 4, 3 }, 21)]
-        [TestCase(new int[] { 5, 5, 5 }, 15)]
-        [TestCase(new int[] { 5, 5, 5, 5, 5 }, 30)]
-        [TestCase(new int[] { 1, 1, 1 }, 3)]
-        [TestCase(new int[] { 1, 1, 1 }, 3)]
-        [TestCase(new int[] { 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 }, 150)]
-        [TestCase(new int[] { 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 }, 145)]
-        [TestCase(new int[] { 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 }, 300)]
+        [TestCase(new int[] { 10, 1, 1 }, 14, 2)]
+        [TestCase(new int[] { 10, 2, 4 }, 22, 2)]
+        [TestCase(new int[] { 5, 5, 4 }, 14, 1)]
+        [TestCase(new int[] { 5, 5, 4, 3 }, 21, 2)]
+        [TestCase(new int[] { 5, 5, 5 }, 15, 1)]
+        [TestCase(new int[] { 5, 5, 5, 5, 5 }, 30, 2)]
+        [TestCase(new int[] { 1, 1, 1 }, 3, 1)]
+        [TestCase(new int[] { 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 }, 150, 10)]
+        [TestCase(new int[] { 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 }, 145, 10)]
+        [TestCase(new int[] { 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 }, 300, 12)]
 
         [Test]
-        public void RolledTenPinsInFirstThrow_RecieveTenRolledPinsAndStrikeBonusForNextTwoThrows(int[] listOfRolledPinsInEveryThrow, int expected)
+        public void RolledTenPinsInFirstThrow_RecieveTenRolledPinsAndStrikeBonusForNextTwoThrows(int[] listOfRolledPinsInEveryThrow, int expectedScore, int expectedNumberOfFrames)
         {
             game.ManyThrowsSecond(listOfRolledPinsInEveryThrow.Length, listOfRolledPinsInEveryThrow);
 
             result = game.Score();
 
-            Assert.AreEqual(expected, result);
+            Assert.AreEqual(expectedScore, result);
+            Assert.AreEqual(expectedNumberOfFrames, game.FrameCounter);
         }
     }
 }
