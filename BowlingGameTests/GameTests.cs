@@ -71,14 +71,14 @@ namespace BowlingGameTests
             Assert.AreEqual(expected, result);
         }
 
-
-        [TestCase(new int[] { 10, 1, 1 }, 14, 2)]
-        [TestCase(new int[] { 10, 2, 4 }, 22, 2)]
-        [TestCase(new int[] { 5, 5, 4 }, 14, 1)]
-        [TestCase(new int[] { 5, 5, 4, 3 }, 21, 2)]
-        [TestCase(new int[] { 5, 5, 5 }, 15, 1)]
-        [TestCase(new int[] { 5, 5, 5, 5, 5 }, 30, 2)]
-        [TestCase(new int[] { 1, 1, 1 }, 3, 1)]
+        // ALL CASES SHOULD HAVE 10 FRAMES (AT LEAST 12 THROWS (when all of them are strikes) AND MAX 21 THROWS (when last frame gave / 19th throw, gave STRIKE so we get 2 bonus throws))
+        [TestCase(new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 10, 1, 1 }, 30, 10)]
+        [TestCase(new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 10, 2, 4 }, 34, 10)]
+        [TestCase(new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5, 5, 4 }, 32, 10)]
+        [TestCase(new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5, 5, 4, 3 }, 37, 10)]
+        [TestCase(new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5, 5, 5 }, 33, 10)]
+        [TestCase(new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5, 5, 5, 5, 5 }, 46, 10)]
+        [TestCase(new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, 20, 10)]
         [TestCase(new int[] { 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 }, 150, 10)]
         [TestCase(new int[] { 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 }, 145, 10)]
         [TestCase(new int[] { 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 }, 300, 10)]

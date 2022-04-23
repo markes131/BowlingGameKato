@@ -140,7 +140,7 @@ namespace BowlingGame
 
                 ListWithNumberOfRolledPinsInThrowWithIndex[i] = rolledPins;
 
-                Console.WriteLine($"#{i+1} #{listOfRolledPinsInEveryThrow[i]}");
+                Console.WriteLine($"#{i+1} PINS: {listOfRolledPinsInEveryThrow[i]}");
 
                 // SPARE sprawdzamy czy aktualny rzut jest ostatnim rzutem, jeśli tak to porzucamy multiplaying strąconych pinów w tym rzucie
                 if (i == numberOfThrows - 1)
@@ -176,7 +176,8 @@ namespace BowlingGame
                 // STRIKE sprawdzamy czy ostatnia ramka dała nam bonus jeśli tak to go liczymy
                 if (lastFrameUnlockedStrike == true && usedStrikeBonusCounter <= 2 && frameCounter < 10)
                 {
-                    Console.WriteLine($"BONUS +{listOfRolledPinsInEveryThrow[i]} #{i}");
+                    Console.WriteLine($"Strike bonus for THIS throw = {lastFrameUnlockedStrike}");
+                    Console.WriteLine($"BONUS +{listOfRolledPinsInEveryThrow[i]} #{i - usedStrikeBonusCounter}");
 
                     //GameScore += (listOfRolledPinsInEveryThrow[i - 1] + listOfRolledPinsInEveryThrow[i]);
                     GameScore += listOfRolledPinsInEveryThrow[i];
@@ -201,14 +202,20 @@ namespace BowlingGame
                 // STRIKE sprawdzamy czy aktualny rzut dał nam bonus
                 if (frameThrowsCounter == 1 && rolledPins == 10 && frameCounter < 10)
                 {
-                    Console.WriteLine("STRIKE");
                     lastFrameUnlockedStrike = true;
                     frameThrowsCounter = 3;
                     usedStrikeBonusCounter = 0;
+                    Console.WriteLine("STRIKE");
+                    Console.WriteLine($"Strike counter = {usedStrikeBonusCounter}");
+                    Console.WriteLine($"Strike unlocked for next two throws? = {lastFrameUnlockedStrike}");
                 }
                 else
                 {
                     frameThrowsCounter++;
+                    if (usedStrikeBonusCounter != 1)
+                    {
+                        lastFrameUnlockedStrike = false;
+                    }
                 }
 
                 if (frameThrowsCounter >= 3 && frameCounter < 10)
