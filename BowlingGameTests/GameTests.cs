@@ -91,7 +91,7 @@ namespace BowlingGameTests
 
 
         [Test]
-        public void RolledTenPinsInFirstThrow_RecieveTenRolledPinsAndStrikeBonusForNextTwoThrows(int[] listOfRolledPinsInEveryThrow, int expectedScore, int expectedNumberOfFrames)
+        public void RolledDifferentNumbersOfPins_RecieveTheRightGameScoreForEachTestCase(int[] listOfRolledPinsInEveryThrow, int expectedScore, int expectedNumberOfFrames)
         {
             game.ManyThrowsSecond(listOfRolledPinsInEveryThrow.Length, listOfRolledPinsInEveryThrow);
 
