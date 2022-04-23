@@ -31,12 +31,11 @@ namespace BowlingGame
             return Pins;
         }
 
-        int[] ListWithNumberOfRolledPinsInThrowWithIndex;
 
         public int ManyThrows(int numberOfThrows, int numberOfRolledPinsPerThrow)
         {
-            ListWithNumberOfRolledPinsInThrowWithIndex = new int[numberOfThrows];
-            int rolledPins = 0;
+            int[] ListWithNumberOfRolledPinsInThrowWithIndex = new int[numberOfThrows];
+            int rolledPins;
 
             for (int i = 0; i < numberOfThrows; i++)
             {
@@ -53,73 +52,14 @@ namespace BowlingGame
             return GameScore;
         }
 
-
-        int[] ListOfThrowsWithPunctation;
-
-        public int ManyThrows(int numberOfThrows, int[] listOfRolledPinsInEveryThrow)
-        {
-            ListWithNumberOfRolledPinsInThrowWithIndex = new int[numberOfThrows];
-            ListOfThrowsWithPunctation = new int[numberOfThrows];
-
-            int rolledPins = 0;
-            //Boolean didLastThrowGiveStrike = false;
-            //Boolean thisThrowGiveStrike = false;
-            //Boolean nextThrowIsInNewFrame = false;
-            int frameThrowsCounter = 1;
-
-            for (int i = 0; i < numberOfThrows; i++)
-            {
-                rolledPins = Throw(listOfRolledPinsInEveryThrow[i]);
-
-                ListWithNumberOfRolledPinsInThrowWithIndex[i] = rolledPins;
-
-                /*                if (lastThrowGaveStrike == true)
-                                {
-                                    nextThrowIsInNewFrame = true;
-                                }*/
-
-                // SPARE
-                //if (i > 1 && ((ListOfThrowsWithRolledPins[i - 2] + ListOfThrowsWithRolledPins[i - 1]) == 10) && nextThrowIsInNewFrame)
-                //if (frameThrowsCounter == 2 && nextThrowIsInNewFrame == true && ((ListOfThrowsWithRolledPins[i - 2] + ListOfThrowsWithRolledPins[i - 1]) == 10))
-                if (frameThrowsCounter == 1 && i > 0 && ((ListWithNumberOfRolledPinsInThrowWithIndex[i - 1] + ListWithNumberOfRolledPinsInThrowWithIndex[i]) == 10))
-                {
-                    GameScore += rolledPins;
-                }
-
-                // STRIKE
-                //if (i > 1 && RolledPinsInEveryThrow[i-2] == 10)
-                if (frameThrowsCounter == 1 && ListWithNumberOfRolledPinsInThrowWithIndex[i] == 10)
-                {
-                    //thisThrowGiveStrike = true;
-                    //didLastThrowGiveStrike = true;
-                    //nextThrowIsInNewFrame = true;
-                    GameScore += (listOfRolledPinsInEveryThrow[i - 1] + listOfRolledPinsInEveryThrow[i]);
-                    frameThrowsCounter = 2;
-                }
-
-                ListOfThrowsWithPunctation[i] = GameScore;
-                //nextThrowIsInNewFrame = false;
-
-                if (frameThrowsCounter == 2)
-                {
-                    frameThrowsCounter = 1;
-                }
-                else
-                {
-                    frameThrowsCounter++;
-                }
-            }
-
-            return GameScore;
-        }
-
         // pointing the index of frame
         public int FrameCounter {get; set;}
 
+        // 2.0 VERSION OF MANYTHROWS IMPLEMENTATION (1.0 DELETED)
         public int ManyThrowsSecond(int numberOfThrows, int[] listOfRolledPinsInEveryThrow)
         {
-            ListWithNumberOfRolledPinsInThrowWithIndex = new int[numberOfThrows];
-            int rolledPins = 0;
+            int rolledPins;
+            int[] ListWithNumberOfRolledPinsInThrowWithIndex = new int[numberOfThrows];
             // iteration variable for countering throws in current frame
             int frameThrowsCounter = 1;
             // pointing the index of frame
@@ -142,44 +82,49 @@ namespace BowlingGame
 
                 Console.WriteLine($"#{i+1} PINS: {listOfRolledPinsInEveryThrow[i]}");
 
-                // SPARE sprawdzamy czy aktualny rzut jest ostatnim rzutem, jeśli tak to porzucamy multiplaying strąconych pinów w tym rzucie
+
+                #region START OF SPARE
+                // SPARE ENG checking does actual throw is a last throw in the game?, if true -> we abandone adding bonuses pins for this throw to GameScore
+                // SPARE PL sprawdzamy czy aktualny rzut jest ostatnim w grze, jeśli tak to blokujemy dodanie bonusu za strącone piny w tym rzucie
                 if (i == numberOfThrows - 1)
                 {
                     lastFrameUnlockedSpare = false;
                 }
-                // SPARE sprawdzamy czy ostatnia ramka dała nam bonus 
-                //if (lastFrameUnlockedSpare == true)
-                //if (lastFrameUnlockedSpare == true && frameThrowsCounter == 1)
-                //if (lastFrameUnlockedSpare == true && (i <= numberOfThrows - 1) && frameThrowsCounter == 1)
-                //if (lastFrameUnlockedSpare == true && ((i + 1) <= numberOfThrows))
-                if (lastFrameUnlockedSpare == true)
+
+                // SPARE ENG checking did last frame gave us a bonus?
+                // SPARE PL sprawdzamy czy ostatnia ramka dała nam bonus 
+                if (lastFrameUnlockedSpare is true)
                 {
                     GameScore += rolledPins;
                     lastFrameUnlockedSpare = false;
-                } 
+                }
 
-                // SPARE sprawdzamy czy po drugim rzucie odblokowujemy bonus
+                // SPARE ENG checking does after second throw in a frame we unlocking a spare bonus
+                // SPARE PL sprawdzamy czy po drugim rzucie w ramce odblokowujemy bonus spare
                 if (frameThrowsCounter == 2 && i > 0 && ((ListWithNumberOfRolledPinsInThrowWithIndex[i - 1] + ListWithNumberOfRolledPinsInThrowWithIndex[i]) == 10))
                 {
                         lastFrameUnlockedSpare = true;
                 }
 
+                #endregion END OF SPARE
 
-                //STRIKE sprawdzamy czy aktualny rzut jest jednym z dwóch ostatnich, jeśli tak to porzucamy multiplaying strąconych pinów w tych rzutach
-                //if (frameCounter >= 10 && (i == numberOfThrows - 2 || i == numberOfThrows - 1))
 
-                //STRIKE sprawdzamy czy aktualny rzut jest ostatnim, jeśli tak to porzucamy multiplaying strąconych pinów dla tego rzutu
+                #region START OF STRIKE
+
+                // STRIKE ENG checking -> Is actual throw a last in the game?, if true -> we abandone adding bonuses pins for this throw to GameScore
+                // STRIKE PL sprawdzamy czy aktualny rzut jest ostatnim w grze, jeśli tak to blokujemy dodanie bonusu za strącone piny w tym rzucie
                 if (frameCounter >= 10 && (i == numberOfThrows - 1))
                 {
                     lastFrameUnlockedStrike = false;
                 }
-                // STRIKE sprawdzamy czy ostatnia ramka dała nam bonus jeśli tak to go liczymy
-                if (lastFrameUnlockedStrike == true && usedStrikeBonusCounter <= 2 && frameCounter < 10)
+
+                // STRIKE ENG checking -> Did last frame gave us a strike bonus?, if true -> we adding bonuses pins rolled in this throw to GameScore
+                // STRIKE PL sprawdzamy czy ostatnia ramka dała nam bonus, jeśli tak to dodajemy bonusowe piny do wyniku
+                if (lastFrameUnlockedStrike is true && usedStrikeBonusCounter <= 2 && frameCounter < 10)
                 {
                     Console.WriteLine($"Strike bonus for THIS throw = {lastFrameUnlockedStrike}");
                     Console.WriteLine($"BONUS +{listOfRolledPinsInEveryThrow[i]} #{i - usedStrikeBonusCounter}");
 
-                    //GameScore += (listOfRolledPinsInEveryThrow[i - 1] + listOfRolledPinsInEveryThrow[i]);
                     GameScore += listOfRolledPinsInEveryThrow[i];
                     usedStrikeBonusCounter++;
                 }
@@ -188,8 +133,8 @@ namespace BowlingGame
                     usedStrikeBonusCounter = 0;
                 }
 
-                // sprawdzamy czy przed wcześniejszą ramką (ramka przed wcześniejszą ramką -> wcześniejsza ramka -> obecna ramka) też mieliśmy strike'a,
-                // jeśli tak to robimy drugie multiplaying
+                // STRIKE ENG checking -> Did we have a strike two frames earlier?, if true -> we adding a rolled pins in this throw as bonuses pins to GameScore
+                // STRIKE PL sprawdzamy czy dwie ramki temu dostaliśmyt strike'a, jesli tak to -> dodajemy strącone piny w danym rzucie jako bonusowe do wyniku
                 if (frameCounter >= 2 && (listOfRolledPinsInEveryThrow[i - 2] == 10))
                 {
                     if ((i != numberOfThrows - 1))
@@ -199,7 +144,9 @@ namespace BowlingGame
                     }
                 }
 
-                // STRIKE sprawdzamy czy aktualny rzut dał nam bonus
+
+                // STRIKE ENG checking, Did actual throw give us a bonus?
+                // STRIKE PL sprawdzamy, czy aktualny rzut dał nam bonus?
                 if (frameThrowsCounter == 1 && rolledPins == 10 && frameCounter < 10)
                 {
                     lastFrameUnlockedStrike = true;
@@ -218,18 +165,14 @@ namespace BowlingGame
                     }
                 }
 
+                #endregion END OF STRIKE
+
+                // ENG checking, Did we get to the end of the current frame?
                 if (frameThrowsCounter >= 3 && frameCounter < 10)
                 {
                     frameCounter++;
                 }
-                //if (frameThrowsCounter == 2)
-                //{
-                //    frameThrowsCounter = 1;
-                //}
-                //else
-                //{
-                //    frameThrowsCounter++;
-                //}
+
                 Console.WriteLine($"Score = {GameScore}");
                 Console.WriteLine();
             }
