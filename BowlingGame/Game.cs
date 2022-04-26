@@ -35,8 +35,9 @@ namespace BowlingGame
         public int FrameCounter {get; set;}
 
         // 2.0 VERSION OF MANYTHROWS IMPLEMENTATION (1.0 DELETED)
-        public int ManyThrowsSecond(int numberOfThrows, int[] listOfRolledPinsInEveryThrow)
+        public int PlayWithListOfThrows(int[] listOfThrowsWithNumberOfRolledPins)
         {
+            int numberOfThrows = listOfThrowsWithNumberOfRolledPins.Length;
             int rolledPins;
             int[] ListWithNumberOfRolledPinsInThrowWithIndex = new int[numberOfThrows];
             // iteration variable for countering throws in current frame
@@ -55,11 +56,11 @@ namespace BowlingGame
                     frameThrowsCounter = 1;
                 }
 
-                rolledPins = Throw(listOfRolledPinsInEveryThrow[i]);
+                rolledPins = Throw(listOfThrowsWithNumberOfRolledPins[i]);
 
                 ListWithNumberOfRolledPinsInThrowWithIndex[i] = rolledPins;
 
-                Console.WriteLine($"#{i+1} PINS: {listOfRolledPinsInEveryThrow[i]}");
+                Console.WriteLine($"#{i+1} PINS: {listOfThrowsWithNumberOfRolledPins[i]}");
 
 
                 #region START OF SPARE
@@ -102,9 +103,9 @@ namespace BowlingGame
                 if (lastFrameUnlockedStrike is true && usedStrikeBonusCounter <= 2 && frameCounter < 10)
                 {
                     Console.WriteLine($"Strike bonus for THIS throw = {lastFrameUnlockedStrike}");
-                    Console.WriteLine($"BONUS +{listOfRolledPinsInEveryThrow[i]} #{i - usedStrikeBonusCounter}");
+                    Console.WriteLine($"BONUS +{listOfThrowsWithNumberOfRolledPins[i]} #{i - usedStrikeBonusCounter}");
 
-                    GameScore += listOfRolledPinsInEveryThrow[i];
+                    GameScore += listOfThrowsWithNumberOfRolledPins[i];
                     usedStrikeBonusCounter++;
                 }
                 else
@@ -114,12 +115,12 @@ namespace BowlingGame
 
                 // STRIKE ENG checking -> Did we have a strike two frames earlier?, if true -> we adding a rolled pins in this throw as bonuses pins to GameScore
                 // STRIKE PL sprawdzamy czy dwie ramki temu dostaliśmyt strike'a, jesli tak to -> dodajemy strącone piny w danym rzucie jako bonusowe do wyniku
-                if (frameCounter >= 2 && (listOfRolledPinsInEveryThrow[i - 2] == 10))
+                if (frameCounter >= 2 && (listOfThrowsWithNumberOfRolledPins[i - 2] == 10))
                 {
                     if ((i != numberOfThrows - 1))
                     {
-                        GameScore += listOfRolledPinsInEveryThrow[i];
-                        Console.WriteLine($"BONUS +{listOfRolledPinsInEveryThrow[i]} #{(i - 1)}");
+                        GameScore += listOfThrowsWithNumberOfRolledPins[i];
+                        Console.WriteLine($"BONUS +{listOfThrowsWithNumberOfRolledPins[i]} #{(i - 1)}");
                     }
                 }
 

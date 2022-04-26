@@ -7,4 +7,4 @@ Game game = new Game();
 
 int[] listOfRolledPinsInEveryThrow = new int[] { 10, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
 
-game.ManyThrowsSecond(listOfRolledPinsInEveryThrow.Length, listOfRolledPinsInEveryThrow);
+game.PlayWithListOfThrows(listOfRolledPinsInEveryThrow);

@@ -143,7 +143,7 @@ namespace BowlingGameTests
         // SUPPORTING METHOD FOR RUNNING TEST CASES WITH DEFINED ASSERT SCHEME
         public void RunTestCaseWithDefaultAssertScheme(int[] listOfRolledPinsInEveryThrow, int expectedScore, int expectedNumberOfFrames)
         {
-            game.ManyThrowsSecond(listOfRolledPinsInEveryThrow.Length, listOfRolledPinsInEveryThrow);
+            game.PlayWithListOfThrows(listOfRolledPinsInEveryThrow);
 
             result = game.Score();
 
