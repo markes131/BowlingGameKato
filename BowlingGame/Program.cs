@@ -5,6 +5,6 @@ Console.WriteLine("Hello, World!");
 
 Game game = new Game();
 
-int[] listOfRolledPinsInEveryThrow = new int[] { 10, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
+int[] listOfThrowsWithNumberOfRolledPins = new int[] { 10, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 };
 
-game.PlayWithListOfThrows(listOfRolledPinsInEveryThrow);
+game.PlayWithListOfThrows(listOfThrowsWithNumberOfRolledPins);
