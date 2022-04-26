@@ -31,46 +31,6 @@ namespace BowlingGameTests
             Assert.AreEqual(expected, result);
         }
 
-
-        [TestCase(20, 1, 20)]
-
-        [Test]
-        public void EveryThrowRolledOnePin_RecieveSumOfRolledPins(int throws, int numberOfRolledPinsPerThrow, int expected)
-        {
-            game = new Game();
-
-            game.ManyThrows(throws, numberOfRolledPinsPerThrow);
-
-            result = game.Score();
-
-            Assert.AreEqual(expected, result);
-        }
-
-
-        [TestCase(0)]
-
-        [Test]
-        public void EveryThrowRolledZeroPins_RecieveSumOfRolledPinsEqualZero(int expected)
-        {
-            game = new Game();
-
-            game.ManyThrows(20, expected);
-
-            result = game.Score();
-
-            Assert.AreEqual(expected, result);
-        }
-
-        [TestCase(2, 5, 10)]
-
-        [Test]
-        public void RolledTenPinsInTwoThrows_RecieveTenRolledPins(int throws, int rolledPinsPerThrow, int expected)
-        {
-            game.ManyThrows(throws, rolledPinsPerThrow);
-            result = game.Score();
-            Assert.AreEqual(expected, result);
-        }
-
         // ALL CASES SHOULD HAVE 10 FRAMES (AT LEAST 12 THROWS (when all of them are strikes) AND MAX 21 THROWS (when last frame gave / 19th throw, gave STRIKE so we get 2 bonus throws))
         [TestCase(new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 10, 1, 1 }, 30, 10)]
         [TestCase(new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 10, 2, 4 }, 34, 10)]

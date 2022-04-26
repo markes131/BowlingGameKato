@@ -31,27 +31,6 @@ namespace BowlingGame
             return Pins;
         }
 
-
-        public int ManyThrows(int numberOfThrows, int numberOfRolledPinsPerThrow)
-        {
-            int[] ListWithNumberOfRolledPinsInThrowWithIndex = new int[numberOfThrows];
-            int rolledPins;
-
-            for (int i = 0; i < numberOfThrows; i++)
-            {
-                rolledPins = Throw(numberOfRolledPinsPerThrow);
-
-                ListWithNumberOfRolledPinsInThrowWithIndex[i] = rolledPins;
-
-                if (i > 1 && (ListWithNumberOfRolledPinsInThrowWithIndex[i - 2] + ListWithNumberOfRolledPinsInThrowWithIndex[i - 1]) == 10)
-                {
-                    GameScore += rolledPins;
-                }
-            }
-
-            return GameScore;
-        }
-
         // pointing the index of frame
         public int FrameCounter {get; set;}
 
