@@ -31,16 +31,16 @@ namespace BowlingGameTests
             Assert.AreEqual(expected, result);
         }
 
+        // ALL CASES SHOULD HAVE 10 FRAMES (AT LEAST 12 THROWS (when all of them are strikes) AND MAX 21 THROWS (when last frame gave / 19th throw, gave STRIKE so we get 2 bonus throws))
 
         [TestCase(new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, 20, 10)]
 
         [Test]
-        public void RollingOnePinInEachThrow_ShouldReturnTheScoreEqualToNumberOfThrowsWhichIs20(int[] listOfRolledPinsInEveryThrow, int expectedScore, int expectedNumberOfFrames)
+        // BEFORE MODULE 4  RollingOnePinInEachThrow_ShouldReturnTheScoreEqualToNumberOfThrowsWhichIs20
+        public void PlayTheGameWhereInEachThrowWeRollingOnePin_ShouldReturnTheScoreEqualToNumberOfRolledPinsInEachThrow(int[] listOfRolledPinsInEveryThrow, int expectedScore, int expectedNumberOfFrames)
         {
             RunTestCaseWithDefaultAssertScheme(listOfRolledPinsInEveryThrow, expectedScore, expectedNumberOfFrames);
         }
-
-        // ALL CASES SHOULD HAVE 10 FRAMES (AT LEAST 12 THROWS (when all of them are strikes) AND MAX 21 THROWS (when last frame gave / 19th throw, gave STRIKE so we get 2 bonus throws))
 
 
         [TestCase(new int[] { 9, 0, 9, 0, 9, 0, 9, 0, 9, 0, 9, 0, 9, 0, 9, 0, 9, 0, 9, 0 }, 90, 10)]
@@ -56,8 +56,9 @@ namespace BowlingGameTests
 
         [TestCase(new int[] { 10, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, 30, 10)]
 
-        [Test]
-        public void RollingStrikeInFirstFrameAndOnePinEachInOtherThrows_ShouldMultiplyRolledPinsInNextTwoThrowsAfterFirstFrameAndAddTheRestPinsToScore_AndReturnFinalScoreEqualTo30(int[] listOfRolledPinsInEveryThrow, int expectedScore, int expectedNumberOfFrames)
+        [Test] 
+        // BEFORE MODULE 4 RollingStrikeInFirstFrameAndOnePinEachInOtherThrows_ShouldMultiplyRolledPinsInNextTwoThrowsAfterFirstFrameAndAddTheRestPinsToScore_AndReturnFinalScoreEqualTo30
+        public void PlayTheGameWhereFirstFrameGivingStrikeAndTheRestOfThrowsRollingOnePinEach_ShouldCalculateAndReturnTheScoreWithSumOfRolledPinsInEachThrowAndMultipliedRolledPinsInSecondAndThirdThrowWhichAreStrikeBonuses(int[] listOfRolledPinsInEveryThrow, int expectedScore, int expectedNumberOfFrames)
         {
             RunTestCaseWithDefaultAssertScheme(listOfRolledPinsInEveryThrow, expectedScore, expectedNumberOfFrames);
         }
@@ -68,8 +69,9 @@ namespace BowlingGameTests
         [TestCase(new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 10, 1, 1 }, 30, 10)]
         [TestCase(new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 10, 2, 4 }, 34, 10)]
 
-        [Test]
-        public void Rolling18TimesOnePinFor9FramesAndStrikeInLastFrame_ShouldGiveUsTwoAdditionalThrowsWithoutMultiplyBonusForTheseThrows(int[] listOfRolledPinsInEveryThrow, int expectedScore, int expectedNumberOfFrames)
+        [Test] 
+        //BEFORE MODULE 4 Rolling18TimesOnePinFor9FramesAndStrikeInLastFrame_ShouldGiveUsTwoAdditionalThrowsWithoutMultiplyBonusForTheseThrows
+        public void PlayTheGameInWhichTheLastFrameGivingStrikeAndAllTheRestThrowsDoNotGiveStrikeOrSpareBonus_ShouldCalculateAndReturnTheScoreWithSumOfRolledPinsInEachThrowIncludingTwoAddictionalThrowsProvidedByStrikeBonusFromLastFrame(int[] listOfRolledPinsInEveryThrow, int expectedScore, int expectedNumberOfFrames)
         {
             RunTestCaseWithDefaultAssertScheme(listOfRolledPinsInEveryThrow, expectedScore, expectedNumberOfFrames);
         }
@@ -84,8 +86,9 @@ namespace BowlingGameTests
         // so we can use strike bonus guaranted by 9th frame second time (cuz we just used it only for the first "next" throw). So we multiply pins rolled in first additional throw and add them to Score.
         [TestCase(new int[] { 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 }, 300, 10)]
 
-        [Test]
-        public void RollingStrikeInEveryFrameAndTenPinsInEachOfTwoLastAdditionalThrows_ShouldReturnScoreEqualTo300RolledPins(int[] listOfRolledPinsInEveryThrow, int expectedScore, int expectedNumberOfFrames)
+        [Test] 
+        //BEFOREE MODULE 4 RollingStrikeInEveryFrameAndTenPinsInEachOfTwoLastAdditionalThrows_ShouldReturnScoreEqualTo300RolledPins
+        public void PlayTheIdealGameWhereEachThrowGivingStrike_ShouldReturnTheSumOfRolledPinsInEveryThrowIncludingMultipliedRolledPinsAndTwoAdditionalThrowsFromLastFrame(int[] listOfRolledPinsInEveryThrow, int expectedScore, int expectedNumberOfFrames)
         {
             RunTestCaseWithDefaultAssertScheme(listOfRolledPinsInEveryThrow, expectedScore, expectedNumberOfFrames);
         }
@@ -98,8 +101,9 @@ namespace BowlingGameTests
         // FIRST LAW OF SPARE -> IF WE ROLL TEN PINS IN TWO THROWS UNDER THE SAME FRAME WE MULTIPLY ROLLED PINS IN THE NEXT THROW
         [TestCase(new int[] { 5, 5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }, 29, 10)]
 
-        [Test]
-        public void RollingSpareInFirstFrameAndOnePinEachInOtherThrows_ShouldMultiplyRolledPinsInNextThrowAfterFirstFrameAndReturnFinalScoreEqualTo29(int[] listOfRolledPinsInEveryThrow, int expectedScore, int expectedNumberOfFrames)
+        [Test] 
+        //BEFORE MODULE 4 RollingSpareInFirstFrameAndOnePinEachInOtherThrows_ShouldMultiplyRolledPinsInNextThrowAfterFirstFrameAndReturnFinalScoreEqualTo29
+        public void PlayTheGameInWhichFirstFrameGivingSpareAndTheRestOfThrowsDoNotGiveStrikeOrSpareBonuses_ShouldReturnTheSumOfRolledPinsInEveryThrowAndMultipliedRolledPinsInFirstThrowOfTheSecondFrameProvidedBySpareBonusFromFirstFrame(int[] listOfRolledPinsInEveryThrow, int expectedScore, int expectedNumberOfFrames)
         {
             RunTestCaseWithDefaultAssertScheme(listOfRolledPinsInEveryThrow, expectedScore, expectedNumberOfFrames);
         }
@@ -111,8 +115,9 @@ namespace BowlingGameTests
         [TestCase(new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5, 5, 5, 5, 5 }, 46, 10)]
         [TestCase(new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5, 5, 1 }, 29, 10)]
 
-        [Test]
-        public void RollingSpareInLastFrame_ShouldGiveUsOneAdditionalThrowWithoutMultiplyingTheBonusPinForThisRoll(int[] listOfRolledPinsInEveryThrow, int expectedScore, int expectedNumberOfFrames)
+        [Test] 
+        // BEFORE MODULE 4 RollingSpareInLastFrame_ShouldGiveUsOneAdditionalThrowWithoutMultiplyingTheBonusPinForThisRoll
+        public void PlayTheGameInWhichLastFrameGivingSpareAndTheRestOfFramesDoNotGiveStrtikeOrSpareBonuses_ShouldReturnTheSumOfRolledPinsInEveryThrowAndOneAdditionalThrowAtTheEndOfTheGameWithoutMultiplyingRolledPinsInThatThrow(int[] listOfRolledPinsInEveryThrow, int expectedScore, int expectedNumberOfFrames)
         {
             RunTestCaseWithDefaultAssertScheme(listOfRolledPinsInEveryThrow, expectedScore, expectedNumberOfFrames);
         }
@@ -121,8 +126,9 @@ namespace BowlingGameTests
         // FIRST AND SECOND SPARE LAW TOGETHER
         [TestCase(new int[] { 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 }, 150, 10)]
 
-        [Test]
-        public void RollingSpareInEveryFrameBy5PinsInEachThrow_ShouldGiveOneAdditionalThrowInLastFrameAndShouldReturnFinalScoreEqualTo150(int[] listOfRolledPinsInEveryThrow, int expectedScore, int expectedNumberOfFrames)
+        [Test] 
+        // BEFORE MODULE 4 RollingSpareInEveryFrameBy5PinsInEachThrow_ShouldGiveOneAdditionalThrowInLastFrameAndShouldReturnFinalScoreEqualTo150
+        public void PlayTheGameInWhichEveryFrameGaveSpare_ShouldReturnTheSumOfRolledPinsInEveryThrowIncludingMultipliedRolledPinsInThrowsWhichGotGuarantedSpareBonusAndIncludingRolledPinsInAdditionalThrowProvidedBySpareInLastFrameWithoutMultiplyingRolledPinsInThatThrow(int[] listOfRolledPinsInEveryThrow, int expectedScore, int expectedNumberOfFrames)
         {
             RunTestCaseWithDefaultAssertScheme(listOfRolledPinsInEveryThrow, expectedScore, expectedNumberOfFrames);
         }
@@ -131,13 +137,14 @@ namespace BowlingGameTests
         [TestCase(new int[] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5, 5, 4, 3 }, 37, 10)]
         [TestCase(new int[] { 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 4 }, 144, 10)]
 
-        [Test]
-        public void RollingSpareInRandomFramesButNotInTheLastFrame_ShouldNotGivesAdditionalThrowInTheLastFrame(int[] listOfRolledPinsInEveryThrow, int expectedScore, int expectedNumberOfFrames)
+        [Test] 
+        // BEFORE MODULE 4 RollingSpareInRandomFramesButNotInTheLastFrame_ShouldNotGivesAdditionalThrowInTheLastFrame
+        public void PlayTheGameInWhichLastFrameDidNotGiveSpare_ShouldReturnTheSumOfRolledPinsInEveryThrowIncludingMultipliedRolledPinsInThrowsWhichGotGuarantedSpareBonusButWithoutSpareInLastFrameSoWithoutAdditionalThrow(int[] listOfRolledPinsInEveryThrow, int expectedScore, int expectedNumberOfFrames)
         {
             RunTestCaseWithDefaultAssertScheme(listOfRolledPinsInEveryThrow, expectedScore, expectedNumberOfFrames);
         }
 
-        #endregion
+        #endregion,
 
 
         // SUPPORTING METHOD FOR RUNNING TEST CASES WITH DEFINED ASSERT SCHEME
